@@ -1,0 +1,437 @@
+/* =========================================================
+   Offers page + Home teaser  (all classes prefixed "ofr-")
+   Relies on tokens from sections.css: --navy --gold --sky --paper --muted
+   ========================================================= */
+
+/* ---------- Page header ---------- */
+
+.ofr-hero {
+  background: var(--navy);
+  color: #fff;
+  text-align: center;
+  padding: 72px 5vw 80px;
+}
+
+.ofr-hero h1 {
+  margin: 0 0 14px;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  color: #fff;
+}
+
+.ofr-hero p {
+  max-width: 56ch;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, .78);
+}
+
+/* ---------- Card grid ---------- */
+
+.ofr-section {
+  background: var(--paper);
+  padding: 72px 5vw 84px;
+}
+
+.ofr-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 56px 40px;
+  max-width: 1100px;
+  margin-inline: auto;
+}
+
+/* colour variants: --ofr-c ribbon/tab/icon, --ofr-c2 ribbon highlight,
+   --ofr-dark fold shade, --ofr-ink ribbon text */
+.ofr-card--navy {
+  --ofr-c: #14264a;
+  --ofr-c2: #223a6b;
+  --ofr-dark: #070f20;
+  --ofr-ink: #ffffff;
+}
+
+.ofr-card--gold {
+  --ofr-c: #c69c6d;
+  --ofr-c2: #dabd92;
+  --ofr-dark: #8f6a3d;
+  --ofr-ink: #14264a;
+}
+
+.ofr-card--wine {
+  --ofr-c: #7a2e45;
+  --ofr-c2: #97435d;
+  --ofr-dark: #4a1a29;
+  --ofr-ink: #ffffff;
+}
+
+.ofr-card--teal {
+  --ofr-c: #2c6a6e;
+  --ofr-c2: #408589;
+  --ofr-dark: #163f42;
+  --ofr-ink: #ffffff;
+}
+
+.ofr-card {
+  position: relative;
+  display: flex;
+  padding-top: 24px;
+  filter: drop-shadow(0 18px 22px rgba(15, 30, 58, .14));
+  transition: transform .4s cubic-bezier(.2, .75, .25, 1), filter .4s ease;
+}
+
+.ofr-card__body {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 14px 14px 46px 46px;
+  padding: 56px 28px 108px;
+  text-align: center;
+}
+
+.ofr-card__text {
+  max-width: 30ch;
+  margin: 0 auto;
+  color: var(--muted);
+}
+
+/* ribbon header, slightly wider than the card, with folded ears */
+.ofr-ribbon {
+  position: absolute;
+  top: 0;
+  left: -12px;
+  right: -12px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  background: linear-gradient(180deg, var(--ofr-c2), var(--ofr-c));
+  color: var(--ofr-ink);
+  border-radius: 3px;
+}
+
+.ofr-ribbon h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  letter-spacing: .02em;
+  color: inherit;
+}
+
+.ofr-ribbon::before,
+.ofr-ribbon::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  width: 12px;
+  height: 10px;
+  background: var(--ofr-dark);
+}
+
+.ofr-ribbon::before {
+  left: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+
+.ofr-ribbon::after {
+  right: 0;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+/* coloured tab at the bottom and the round icon badge on top of it */
+.ofr-tab {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 64%;
+  height: 54px;
+  background: var(--ofr-c);
+  border-radius: 16px 16px 0 0;
+  transform: translateX(-50%);
+}
+
+.ofr-badge {
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  background: #fff;
+  color: var(--ofr-c);
+  font-size: 1.5rem;
+  border-radius: 50%;
+  box-shadow: 0 10px 22px -8px rgba(15, 30, 58, .38);
+  transform: translateX(-50%);
+  transition: transform .35s cubic-bezier(.3, 1.5, .5, 1);
+}
+
+/* ---------- Hover (desktop only) ---------- */
+
+@media (hover: hover) {
+  .ofr-card:hover {
+    transform: translateY(-8px);
+    filter: drop-shadow(0 26px 28px rgba(15, 30, 58, .22));
+  }
+
+  .ofr-card:hover .ofr-badge {
+    transform: translateX(-50%) scale(1.1);
+  }
+}
+
+/* ---------- Scroll reveal ---------- */
+/* Before the card is scrolled into view it is hidden.
+   JS adds .is-visible and sets --ofr-d (stagger delay) per card. */
+
+.ofr-card:not(.is-visible) {
+  opacity: 0;
+}
+
+.ofr-card.is-visible {
+  animation: ofr-rise .85s cubic-bezier(.2, .75, .25, 1) var(--ofr-d, 0ms) backwards;
+}
+
+.ofr-card.is-visible .ofr-ribbon {
+  animation: ofr-drop .65s cubic-bezier(.2, .75, .25, 1) calc(var(--ofr-d, 0ms) + 250ms) backwards;
+}
+
+.ofr-card.is-visible .ofr-card__text {
+  animation: ofr-fade .7s ease calc(var(--ofr-d, 0ms) + 450ms) backwards;
+}
+
+.ofr-card.is-visible .ofr-tab {
+  animation: ofr-tab-in .6s cubic-bezier(.2, .75, .25, 1) calc(var(--ofr-d, 0ms) + 450ms) backwards;
+}
+
+.ofr-card.is-visible .ofr-badge {
+  animation: ofr-pop .65s cubic-bezier(.3, 1.5, .5, 1) calc(var(--ofr-d, 0ms) + 650ms) backwards;
+}
+
+@keyframes ofr-rise {
+  from {
+    opacity: 0;
+    transform: translateY(48px) scale(.95);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ofr-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-16px) scaleX(.82);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ofr-fade {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ofr-tab-in {
+  from {
+    transform: translate(-50%, 100%);
+  }
+  to {
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes ofr-pop {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+/* ---------- Bottom call-to-action ---------- */
+
+.ofr-cta {
+  background: var(--navy);
+  color: #fff;
+  text-align: center;
+  padding: 72px 5vw;
+}
+
+.ofr-cta h2 {
+  margin-bottom: 24px;
+  color: #fff;
+}
+
+.ofr-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* ---------- Home teaser (replaces the old offers section) ---------- */
+
+.ofr-teaser {
+  text-align: center;
+}
+
+.ofr-teaser__text {
+  max-width: 52ch;
+  margin: 0 auto 28px;
+  color: var(--muted);
+}
+
+.ofr-teaser__list {
+  list-style: none;
+  margin: 0 0 32px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.ofr-teaser__list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  background: #fff;
+  color: var(--navy);
+  font-weight: 600;
+  border-radius: 999px;
+  box-shadow: 0 10px 24px -16px rgba(15, 30, 58, .45);
+}
+
+.ofr-teaser__list svg {
+  color: var(--gold);
+  font-size: 1.05rem;
+}
+
+/* ---------- Offers section on Home ---------- */
+
+.ofr-home-title {
+  margin-bottom: 48px;
+  text-align: center;
+}
+
+/* heading reveals word by word */
+.ofr-home-title .ofr-word {
+  display: inline-block;
+}
+
+.ofr-home-title:not(.is-visible) .ofr-word {
+  opacity: 0;
+}
+
+.ofr-home-title.is-visible .ofr-word {
+  animation: ofr-word .8s cubic-bezier(.2, .75, .25, 1)
+    calc(var(--ofr-d, 0ms) + var(--ofr-w, 0) * 110ms) backwards;
+}
+
+@keyframes ofr-word {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.ofr-home-more {
+  margin-top: 48px;
+  text-align: center;
+}
+
+.ofr-home-more:not(.is-visible) {
+  opacity: 0;
+}
+
+.ofr-home-more.is-visible {
+  animation: ofr-fade .8s ease var(--ofr-d, 0ms) backwards;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1024px) {
+  .ofr-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .ofr-hero {
+    padding: 56px 5vw 60px;
+  }
+
+  .ofr-section {
+    padding: 56px 5vw 64px;
+  }
+
+  .ofr-cta {
+    padding: 56px 5vw;
+  }
+}
+
+@media (max-width: 560px) {
+  .ofr-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    max-width: 380px;
+  }
+}
+
+@media (max-width: 450px) {
+  .ofr-hero {
+    padding-inline: 20px;
+  }
+
+  .ofr-section {
+    padding-inline: 26px;
+  }
+
+  .ofr-cta {
+    padding: 48px 20px;
+  }
+
+  .ofr-cta__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .ofr-teaser__list li {
+    padding: 9px 14px;
+  }
+}
+
+/* ---------- Reduced motion: no animation, everything visible ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .ofr-card,
+  .ofr-card *,
+  .ofr-home-title .ofr-word,
+  .ofr-home-more {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .ofr-card:not(.is-visible),
+  .ofr-home-title:not(.is-visible) .ofr-word,
+  .ofr-home-more:not(.is-visible) {
+    opacity: 1;
+  }
+}

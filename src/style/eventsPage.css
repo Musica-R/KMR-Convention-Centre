@@ -1,0 +1,171 @@
+/* ---------- Events page (prefix: evp) ----------
+   Alternating rows: text left / image right, then image left / text right.
+   Reveal classes (.rv, .rv--left, .rv--right, .rv--pop, .rv-title) come
+   from home.css and pages.css. */
+
+.evp-list {
+  display: grid;
+  gap: 104px;
+}
+
+.evp-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+/* flipped rows: image on the left, text on the right */
+.evp-row--flip .evp-media {
+  order: -1;
+}
+
+/* ---- text side ---- */
+
+.evp-content {
+  max-width: 520px;
+}
+
+.evp-row--flip .evp-content {
+  justify-self: start;
+}
+
+.evp-icon {
+  margin-bottom: 20px;
+}
+
+.evp-title {
+  font-size: clamp(1.9rem, 3.4vw, 2.7rem);
+  color: var(--navy);
+  margin-bottom: 18px;
+}
+
+.evp-text {
+  margin: 0;
+  max-width: 52ch;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* ---- image side ---- */
+
+.evp-media {
+  position: relative;
+}
+
+/* gold offset frame, pushed towards the outer edge of the row */
+.evp-media::before {
+  content: "";
+  position: absolute;
+  top: 22px;
+  bottom: -22px;
+  left: 22px;
+  right: -22px;
+  border: 2px solid var(--gold);
+  border-radius: 4px;
+  z-index: 0;
+}
+
+.evp-row--flip .evp-media::before {
+  left: -22px;
+  right: 22px;
+}
+
+.evp-photo {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border-radius: 4px;
+  background: linear-gradient(135deg, var(--navy-2), #23407a);
+  box-shadow: 0 28px 56px -24px rgba(15, 30, 58, .55);
+}
+
+.evp-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.18);
+  transition: transform 1.6s cubic-bezier(.22, .61, .36, 1) .2s;
+}
+
+/* photo settles from a slight zoom once the block is revealed */
+.evp-media.rv--in .evp-photo img {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .evp-photo img {
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .evp-list {
+    gap: 80px;
+  }
+
+  .evp-row {
+    gap: 52px;
+  }
+}
+
+@media (max-width: 768px) {
+  .evp-list {
+    gap: 72px;
+  }
+
+  .evp-row {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  /* on phones the image always comes first, then the text */
+  .evp-media,
+  .evp-row--flip .evp-media {
+    order: -1;
+  }
+
+  .evp-media::before,
+  .evp-row--flip .evp-media::before {
+    top: 14px;
+    bottom: -14px;
+    left: 14px;
+    right: -14px;
+  }
+
+  .evp-row--flip .evp-media::before {
+    left: -14px;
+    right: 14px;
+  }
+
+  .evp-content {
+    max-width: none;
+  }
+}
+
+@media (max-width: 450px) {
+  .evp-list {
+    gap: 60px;
+  }
+
+  .evp-photo {
+    aspect-ratio: 1.25 / 1;
+  }
+
+  .evp-media::before,
+  .evp-row--flip .evp-media::before {
+    top: 10px;
+    bottom: -10px;
+    left: 10px;
+    right: -10px;
+  }
+
+  .evp-row--flip .evp-media::before {
+    left: -10px;
+    right: 10px;
+  }
+}

@@ -1,0 +1,293 @@
+/* Reviews, FAQ, chips, policies, info list, contact extras */
+.reviews-wrap {
+  background: var(--navy);
+  color: #fff;
+}
+
+.reviews-wrap h2 {
+  color: #fff;
+}
+
+.reviews {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 32px;
+}
+
+.review {
+  margin: 0;
+  padding: 30px 26px;
+  background: var(--navy-2);
+  border-top: 3px solid var(--gold);
+}
+
+.review__icon {
+  color: var(--gold);
+  font-size: 1.6rem;
+  margin-bottom: 14px;
+}
+
+.review blockquote {
+  margin: 0;
+}
+
+.review h3 {
+  color: #fff;
+  font-size: 1.55rem;
+}
+
+.review p {
+  color: rgba(255, 255, 255, .8);
+  margin: 0 0 16px;
+}
+
+.review figcaption {
+  font-size: .85rem;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.faq {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.faq__note {
+  color: var(--muted);
+}
+
+.chips {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chips li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: #fff;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  font-size: .9rem;
+  color: var(--navy);
+}
+
+.chips svg {
+  color: var(--gold);
+}
+
+.faq__item {
+  background: #fff;
+  margin-bottom: 12px;
+  border-left: 4px solid transparent;
+}
+
+.faq__item.is-open {
+  border-left-color: var(--gold);
+}
+
+.faq__q {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 22px;
+  background: none;
+  border: 0;
+  text-align: left;
+  font: 600 1.02rem "Manrope", sans-serif;
+  color: var(--navy);
+  cursor: pointer;
+}
+
+.faq__q svg {
+  flex: none;
+  color: var(--gold);
+  transition: transform .3s;
+}
+
+.is-open .faq__q svg {
+  transform: rotate(180deg);
+}
+
+.faq__a {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .3s ease;
+}
+
+.is-open .faq__a {
+  grid-template-rows: 1fr;
+}
+
+.faq__a p {
+  overflow: hidden;
+  margin: 0;
+  padding: 0 22px;
+  color: var(--muted);
+}
+
+.is-open .faq__a p {
+  padding-bottom: 20px;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+}
+
+.policies {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.policies li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid #d5deec;
+}
+
+.policies .ok svg {
+  color: #2e8b57;
+}
+
+.policies .no svg {
+  color: #c0392b;
+}
+
+.info {
+  margin: 0;
+}
+
+.info div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid #d5deec;
+}
+
+.info dt {
+  color: var(--muted);
+}
+
+.info dd {
+  margin: 0;
+  font-weight: 600;
+  text-align: right;
+}
+
+.hours {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin: 0 0 14px;
+}
+
+.hours svg {
+  color: var(--gold);
+  margin-top: 6px;
+  flex: none;
+}
+
+.mapcard {
+  margin-top: 24px;
+  background: var(--navy);
+  color: #fff;
+  overflow: hidden;
+}
+
+.mapcard img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+}
+
+.mapcard__body {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.mapcard__alt {
+  color: var(--gold);
+  font-weight: 600;
+  font-size: .92rem;
+}
+
+@media (max-width: 1024px) {
+  .reviews {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .faq {
+    gap: 36px;
+  }
+
+  .two-col {
+    gap: 36px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .faq,
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 450px) {
+  .reviews {
+    grid-template-columns: 1fr;
+  }
+
+  .faq__q {
+    padding: 16px;
+    font-size: .97rem;
+  }
+
+  .faq__a p {
+    padding-inline: 16px;
+  }
+
+  .mapcard__body .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 340px) {
+  .review {
+    padding: 24px 18px;
+  }
+
+  .chips li {
+    font-size: .82rem;
+    padding: 7px 11px;
+  }
+
+  .info div {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .info dd {
+    text-align: left;
+  }
+}

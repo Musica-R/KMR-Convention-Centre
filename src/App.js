@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route, useLocation } from "react-router-dom";
+import Navbar from "./components/navbar";
+import Footer from "./components/footer";
+import ScrollToTop from "./components/ScrollToTop";
+import BackToTop from "./components/Backtotop";
+import Home from "./pages/home";
+import About from "./pages/about";
+import Events from "./pages/events";
+import Gallery from "./pages/gallery";
+import Contact from "./pages/contact";
 
-function App() {
+export default function App() {
+  const { pathname } = useLocation();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <ScrollToTop />
+      <Navbar />
+      <div className="page" key={pathname}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
+      </div>
+      <Footer />
+      <BackToTop />
+    </>
   );
 }
-
-export default App;

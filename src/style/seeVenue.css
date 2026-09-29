@@ -1,0 +1,360 @@
+/* ---------- See the venue (staircase gallery) ---------- */
+
+.svn {
+  /* animation speed controls: change these three to tune everything */
+  --svn-dur: .8s;     /* how long each photo takes to fade in */
+  --svn-gap: .5s;     /* wait between one photo and the next */
+  --svn-start: 1.2s;  /* wait before the first photo (text shows first) */
+
+  padding: 72px 5vw;
+  background: var(--paper);
+  overflow: hidden;
+}
+
+.svn__inner {
+  max-width: 1200px;
+  margin-inline: auto;
+}
+
+.svn__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: auto;
+  gap: 14px;
+}
+
+/* ----- left side text ----- */
+
+.svn__head {
+  grid-column: 1 / span 3;
+  grid-row: 1;
+  align-self: start;
+  padding-right: 4%;
+}
+
+.svn__eyebrow {
+  margin: 0 0 8px;
+  color: var(--gold);
+  font-size: .76rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.svn__title {
+  margin: 0 0 12px;
+  font-size: clamp(2rem, 4.6vw, 3.6rem);
+  color: var(--navy);
+}
+
+.svn__rule {
+  display: block;
+  width: min(60%, 260px);
+  height: 3px;
+  margin-bottom: 16px;
+  background: var(--gold);
+}
+
+.svn__text {
+  max-width: 64ch;
+  margin: 0 0 .8em;
+  color: var(--muted);
+  font-size: .84rem;
+  line-height: 1.6;
+}
+
+.svn__text:last-child {
+  margin-bottom: 0;
+}
+
+.svn__details {
+  grid-column: 1 / span 2;
+  grid-row: 2;
+  align-self: center;
+  padding-right: 4%;
+}
+
+.svn__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 18px;
+}
+
+.svn__list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.svn__icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: var(--navy);
+  color: var(--gold);
+  border-radius: 50%;
+  font-size: .85rem;
+}
+
+.svn__list strong {
+  display: block;
+  color: var(--navy);
+  font-size: .78rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.svn__list span,
+.svn__list a {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.svn__list a {
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid var(--gold);
+}
+
+.svn__list a:hover {
+  color: var(--navy);
+}
+
+.svn__since {
+  grid-column: 1;
+  grid-row: 3;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-right: 8%;
+}
+
+.svn__since strong {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  line-height: 1;
+  color: var(--navy);
+}
+
+.svn__since span {
+  color: var(--muted);
+  font-size: .78rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.svn__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  width: fit-content;
+  font-size: .84rem;
+  font-weight: 600;
+  color: var(--navy);
+  text-decoration: none;
+  border-bottom: 2px solid var(--gold);
+  padding-bottom: 2px;
+}
+
+.svn__more:hover {
+  color: var(--gold);
+}
+
+/* ----- photos ----- */
+
+.svn__tile {
+  grid-column: var(--svn-col);
+  grid-row: var(--svn-row);
+  align-self: start;
+  margin: 0;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 4px;
+  box-shadow: 0 18px 36px -20px rgba(15, 30, 58, .5);
+  opacity: 0;
+  transform: translateY(-40px) scale(.93);
+  transition:
+    opacity var(--svn-dur) ease,
+    transform calc(var(--svn-dur) + .3s) cubic-bezier(.2, .7, .2, 1);
+}
+
+.svn__tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .8s ease;
+}
+
+.svn__tile:hover img {
+  transform: scale(1.06);
+}
+
+/* text fades in first */
+.svn__head,
+.svn__details,
+.svn__since {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.svn--visible .svn__head,
+.svn--visible .svn__details,
+.svn--visible .svn__since {
+  opacity: 1;
+  transform: none;
+}
+
+.svn--visible .svn__details {
+  transition-delay: .4s;
+}
+
+.svn--visible .svn__since {
+  transition-delay: .8s;
+}
+
+/* photos: one by one, top photo first, bottom row last */
+.svn--visible .svn__tile {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(var(--svn-start) + var(--svn-order) * var(--svn-gap));
+}
+
+/* ----- responsive ----- */
+
+@media (max-width: 1024px) {
+  .svn {
+    padding: 60px 5vw;
+  }
+
+  .svn__list {
+    gap: 14px;
+  }
+
+  .svn__text {
+    font-size: .8rem;
+    line-height: 1.55;
+  }
+}
+
+@media (max-width: 768px) {
+  .svn {
+    padding: 48px 5vw;
+  }
+
+  .svn__grid {
+    gap: 10px;
+  }
+
+  /* text stacks on top, the staircase moves below it */
+  .svn__head {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    padding-right: 0;
+    margin-bottom: 8px;
+  }
+
+  .svn__details {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    padding-right: 0;
+    margin-bottom: 18px;
+  }
+
+  .svn__list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 12px;
+  }
+
+  .svn__since {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    flex-direction: row;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    padding-right: 0;
+    margin-bottom: 14px;
+  }
+
+  .svn__tile {
+    grid-row: calc(var(--svn-row) + 3);
+  }
+
+  .svn__text {
+    font-size: .82rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .svn {
+    --svn-dur: .7s;
+    --svn-gap: .4s;
+    --svn-start: 1s;
+
+    padding: 40px 20px;
+  }
+
+  .svn__grid {
+    gap: 8px;
+  }
+
+  .svn__title {
+    font-size: 1.7rem;
+    margin-bottom: 10px;
+  }
+
+  .svn__rule {
+    margin-bottom: 10px;
+    height: 2px;
+  }
+
+  .svn__list {
+    grid-template-columns: 1fr;
+  }
+
+  .svn__icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .svn__tile {
+    border-radius: 3px;
+  }
+}
+
+@media (max-width: 340px) {
+  .svn {
+    padding: 34px 14px;
+  }
+
+  .svn__grid {
+    gap: 6px;
+  }
+
+  .svn__title {
+    font-size: 1.45rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svn__head,
+  .svn__details,
+  .svn__since,
+  .svn__tile {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .svn__tile img {
+    transition: none;
+  }
+}

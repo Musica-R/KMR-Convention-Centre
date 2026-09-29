@@ -1,0 +1,109 @@
+/* ---------- Back to top button (component: BackToTop) ---------- */
+
+.btt {
+  position: fixed;
+  right: 22px;
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  z-index: 90; /* below the gallery lightbox (100) */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--gold);
+  cursor: pointer;
+  box-shadow: 0 14px 30px -12px rgba(15, 30, 58, .7);
+
+  /* hidden state */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(18px) scale(.85);
+  transition:
+    opacity .35s ease,
+    transform .35s cubic-bezier(.34, 1.56, .64, 1),
+    visibility 0s linear .35s,
+    background-color .25s ease,
+    color .25s ease;
+}
+
+.btt--show {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity .35s ease,
+    transform .35s cubic-bezier(.34, 1.56, .64, 1),
+    visibility 0s,
+    background-color .25s ease,
+    color .25s ease;
+}
+
+.btt__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg); /* progress starts from the top */
+}
+
+.btt__track,
+.btt__bar {
+  fill: none;
+  stroke-width: 2.5;
+}
+
+.btt__track {
+  stroke: rgba(198, 156, 109, .28);
+}
+
+.btt__bar {
+  stroke: var(--gold);
+  stroke-linecap: round;
+  transition: stroke-dashoffset .12s linear;
+}
+
+.btt__icon {
+  position: relative;
+  font-size: 1rem;
+  transition: transform .25s ease;
+}
+
+.btt:hover {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.btt:hover .btt__bar {
+  stroke: var(--navy);
+}
+
+.btt:hover .btt__icon {
+  transform: translateY(-3px);
+}
+
+.btt:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btt,
+  .btt--show,
+  .btt__bar,
+  .btt__icon {
+    transition: none;
+  }
+}
+
+@media (max-width: 450px) {
+  .btt {
+    right: 16px;
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    width: 44px;
+    height: 44px;
+  }
+}
